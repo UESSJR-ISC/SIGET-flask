@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-print-none">
+    <div class="container-fluid">
+      <button class="navbar-toggler"
+        type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarNav" aria-controls="navbarNav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="{{ url_for('info') }}">
+        <img src="{{ url_for('static', filename='img/umb-white.png') }}" alt="Logo UMB" width="60" class="d-inline-block align-text-top">
+        &nbsp; S I G E T
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          {% if session_type %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('home') }}">
+                <i class="bi bi-people-fill"></i>
+                Egresados
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('generaciones') }}">
+                <i class="bi bi-calendar-date"></i>
+                Generaciones
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('reportes') }}">
+                <i class="bi bi-graph-up"></i>
+                Reportes
+              </a>
+            </li>
+          {% endif %}
+          {% if session_type and session_type=='admin' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin_unidades') }}">
+                <i class="bi bi-terminal"></i>
+                Admin
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+        <div class="d-flex">
+          <div class="row align-items-center">
+            <div class="col-auto">
+              {% if session_type and session_type=='admin' %}
+                <div class="row text-white g-3">
+                  <div class="col-lg-auto">
+                    Hola, root. 
+                  </div>
+                </div>
+              {% elif session_type %}
+                <div class="row text-white g-3">
+                  <div class="col-lg-auto">
+                    Hola, {{ session_user.nombre }}. 
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-auto">
+              {% if not session_type %}
+                <a class="btn btn-primary" href="{{ url_for('login') }}">
+                  <i class="bi bi-box-arrow-in-right"></i>
+                  Ingresar
+                </a>
+              {% else %}
+                <a class="btn btn-primary" href="{{ url_for('logout') }}">
+                  <i class="bi bi-box-arrow-right"></i>
+                  Salir
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  

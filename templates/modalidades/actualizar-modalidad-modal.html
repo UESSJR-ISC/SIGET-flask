@@ -1,0 +1,32 @@
+<div class="modal fade" id="modal-modalidad-actualizar-{{ modalidad.id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar modalidad</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('modalidades_update', id=modalidad.id) }}" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="nombre">Nombre de la modalidad</label>
+                        <input type="text" name="nombre" id="nombre" class="form-control" maxlength="50" placeholder="{{ modalidad.nombre }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion">Descripcion</label>
+                        <textarea name="descripcion" id="descripcion" rows="3" maxlength="150" class="form-control" style="resize: none;">{{ modalidad.descripcion }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="manual">Manual (PDF)</label>
+                        <input class="form-control" type="file" name="manual" id="manual">
+                    </div>
+                    <div class="row mb-3 justify-content-end">
+                        <div class="col-lg-auto">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-arrow-90deg-left"></i> Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Guardar <i class="bi bi-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,177 @@
+<div class="modal fade modal-lg" id="modal-egresado-{{ egresado.id }}" tabindex="-1" class="text-dark">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles del egresado</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'alerts.html' %}
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            {% if egresado.foto != 'default.png' %}
+                                <img class="img-fluid rounded mx-auto d-block" src="{{ url_for('static', filename='img/egresado/'+egresado.foto) }}" alt="Fotografia">
+                            {% else %}
+                                {% if egresado.sexo == '0' %}
+                                    <img class="img-fluid rounded mx-auto d-block" src="{{ url_for('static', filename='img/egresado/default-m.jpg') }}" alt="Fotografia">
+                                {% else %}
+                                    <img class="img-fluid rounded mx-auto d-block" src="{{ url_for('static', filename='img/egresado/default-w.jpg') }}" alt="Fotografia">
+                                {% endif %}
+                            {% endif %}
+                            <div class="container-fluid g-0 mt-3">
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <small>Nombre</small>
+                            <h5>{{ egresado.nombre }} {{ egresado.apellidos }}</h5>
+                            <div class="container-fluid g-0">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <small><i class="bi bi-question-diamond"></i> Estatus</small>
+                                        <p>
+                                            {% if egresado.estatus == 0 %}
+                                                <span class="badge text-bg-secondary">Pendiente</span>
+                                            {% elif egresado.estatus == 1 %}
+                                                <span class="badge text-bg-warning">Seguimiento</span>
+                                            {% elif egresado.estatus == 2 %}
+                                                <span class="badge text-bg-danger">No titulado</span>
+                                            {% else %}
+                                                <span class="badge text-bg-success">Titulado</span>
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <small>Matricula</small>
+                                        <p>{{ egresado.matricula }}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <small>Generacion</small>
+                                        <p>{{ egresado.generacion.anio_inicio }} - {{ egresado.generacion.anio_final }}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <small>Modalidad</small>
+                                        <p>
+                                            {% if egresado.modalidad.manual != 'default.pdf' %}
+                                                <a href="{{ url_for('static', filename='manual/'+egresado.modalidad.manual) }}" target="_blank" style="text-decoration: none;">
+                                                    {{ egresado.modalidad.nombre }} <i class="bi bi-box-arrow-up-right"></i>
+                                                </a>
+                                            {% else %}
+                                                {{ egresado.modalidad.nombre }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid g-0">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <small><i class="bi bi-geo-alt-fill"></i> Domicilio</small>
+                                        <p>
+                                            {% if egresado.domicilio != 'DESCONOCIDO' %}
+                                                <a href="https://www.google.com/maps/search/{{ egresado.domicilio }}" target="_blank" class="modal-link">
+                                                    {{ egresado.domicilio }} <i class="bi bi-box-arrow-up-right"></i>
+                                                </a>
+                                            {% else %}
+                                                {{ egresado.domicilio }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <small><i class="bi bi-envelope-at"></i> Correo</small>
+                                        <p>
+                                            {% if egresado.correo != 'DESCONOCIDO' %}
+                                                <a href="mailto:{{ egresado.correo }}" target="_blank" class="modal-link">
+                                                    {{ egresado.correo }}
+                                                </a>
+                                            {% else %}
+                                                {{ egresado.correo }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <small><i class="bi bi-telephone"></i> Telefono</small>
+                                        <p>
+                                            {% if egresado.telefono != 'DESCONOCIDO' %}
+                                                <a href="https://wa.me/{{ egresado.telefono }}" target="_blank" class="modal-link">
+                                                    {{ egresado.telefono }}
+                                                </a>
+                                            {% else %}
+                                                {{ egresado.telefono }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid g-0">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <small>CURP</small>
+                                        <p>{{ egresado.curp }}</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <small>Sexo</small>
+                                        <p>
+                                            {% if egresado.sexo == '0' %}
+                                                Hombre
+                                            {% else %}
+                                                Mujer
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <small><i class="bi bi-sticky"></i> Comentarios</small>
+                            {% if egresado.comentarios == '' %}
+                                <p class="text-secondary">Sin comentarios</p>
+                            {% else %}
+                                <div class="card border-primary mb-2">
+                                    <div class="card-body text-primary">
+                                        <i class="bi bi-info-circle"></i> {{ egresado.comentarios }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="container-fluid g-0">
+                                {% if egresado.ficheros|length == 0 %}
+                                    <small class="text-secondary">No hay archivos adjuntos</small>
+                                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#egresado-adjuntar-archivo-modal-{{ egresado.id }}">
+                                        <i class="bi bi-paperclip"></i> adjuntar archivo
+                                    </button>
+                                {% else %}
+                                    <small><i class="bi bi-paperclip"></i> Archivos adjuntos</small>
+                                    <div class="mb-2 mt-1">
+                                        {% for fichero in egresado.ficheros %}
+                                            <a href="{{ url_for('static', filename='adjuntos/'+fichero.ruta) }}" target="_blank" style="text-decoration: none;">
+                                                <small><i class="bi bi-file-earmark"></i> {{ fichero.nombre }}</small>
+                                            </a>
+                                            &bull;
+                                            <a href="{{ url_for('egresado_delfile', id=fichero.id) }}" class="text-danger" style="text-decoration: none;"><i class="bi bi-x-circle"></i> remover</a>
+                                            <br>
+                                        {% endfor %}
+                                    </div>
+                                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#egresado-adjuntar-archivo-modal-{{ egresado.id }}">
+                                        <i class="bi bi-plus-circle"></i> agregar archivo
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <div class="row mt-0">
+                    <div class="col-md-auto">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-arrow-90deg-left"></i> Atrás</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-egresado-actualizar-{{ egresado.id }}"><i class="bi bi-pencil"></i> Actualizar</button>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-egresado-eliminar-{{ egresado.id }}"><i class="bi bi-trash"></i> Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'egresados/modal-eliminar-egresado.html' %}
+{% include 'egresados/modal-actualizar-egresado.html' %}
+{% include 'egresados/modal-agregar-archivo.html' %}

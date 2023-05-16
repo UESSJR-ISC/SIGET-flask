@@ -1,0 +1,32 @@
+<div class="modal fade" id="generacion-{{ generacion.id }}-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="generacion-{{ generacion.id }}-modal">Actualizar generacion</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="update-form-{{ generacion.id }}" action="{{ url_for('generaciones_update', id=generacion.id) }}" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="anio_inicio">Año de ingreso</label>
+                        <input type="number" name="anio_inicio" id="anio_inicio" class="form-control" min="1990"  max="2099" placeholder="{{ generacion.anio_inicio }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="anio_final">Año de egreso</label>
+                        <input type="number" name="anio_final" id="anio_final" class="form-control" min="1990"  max="2099" placeholder="{{ generacion.anio_final }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="foto">Fotografia generacional</label>
+                        <input class="form-control" type="file" name="foto" id="foto">
+                    </div>
+                    <div class="row mt-3 justify-content-end">
+                        <div class="col-lg-auto">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-arrow-90deg-left"></i> Cancelar</button>
+                            <button type="submit" class="btn btn-primary" >Guardar <i class="bi bi-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

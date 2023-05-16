@@ -1,0 +1,21 @@
+<div class="modal fade" id="modal-generacion-eliminar-{{ generacion.id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 text-danger"><i class="bi bi-exclamation-triangle"></i> Esta acción no se puede deshacer.</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="fs-5">
+                    Estás a punto de eliminar el registro de generación con año de ingreso <strong>{{ generacion.anio_inicio }}</strong>
+                    y año de egreso <strong>{{ generacion.anio_final }}</strong> de la base de datos. 
+                    ESTO AFECTA A LOS EGRESADOS REGISTRADOS EN ESA GENERACIÓN.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-arrow-90deg-left"></i> Cancelar</button>
+                <a href="{{ url_for('generaciones_delete', id=generacion.id) }}" class="btn btn-danger">ELIMINAR</a>
+            </div>
+        </div>
+    </div>
+</div>

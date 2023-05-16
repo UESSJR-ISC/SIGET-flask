@@ -1,0 +1,20 @@
+<div class="modal fade" id="modal-modalidad-eliminar-{{ modalidad.id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 text-danger"><i class="bi bi-exclamation-triangle"></i> Esta acción no se puede deshacer.</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="fs-5">
+                    Estás a punto de eliminar el registro de la modalidad <strong>{{ modalidad.nombre }}</strong>
+                    de la base de datos. ESTO AFECTA A LOS EGRESADOS REGISTRADOS EN ESTA MODALIDAD.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-arrow-90deg-left"></i> Cancelar</button>
+                <a href="{{ url_for('modalidades_delete', id=modalidad.id) }}" class="btn btn-danger">ELIMINAR</a>
+            </div>
+        </div>
+    </div>
+</div>

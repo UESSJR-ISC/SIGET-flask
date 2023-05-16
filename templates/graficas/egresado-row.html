@@ -1,0 +1,33 @@
+<tr>
+    <td>
+        {% if egresado.foto != 'default.png' %}
+            <img class="foto-perfil mx-auto d-block" src="{{ url_for('static', filename='img/egresado/'+egresado.foto) }}" alt="Fotografia">
+        {% else %}
+            {% if egresado.sexo == '0' %}
+                <img class="foto-perfil mx-auto d-block" src="{{ url_for('static', filename='img/egresado/default-m.jpg') }}" alt="Fotografia">
+            {% else %}
+                <img class="foto-perfil mx-auto d-block" src="{{ url_for('static', filename='img/egresado/default-w.jpg') }}" alt="Fotografia">
+            {% endif %}
+        {% endif %}
+    </td>
+    <td>{{ egresado.nombre }} {{ egresado.apellidos }}</td>
+    <td>{{ egresado.generacion.anio_inicio }} - {{ egresado.generacion.anio_final }}</td>
+    <td>{{ egresado.modalidad.nombre }}</td>
+    <td>
+        {% if egresado.estatus == 0 %}
+            <span class="badge text-bg-secondary">Pendiente</span>
+        {% elif egresado.estatus == 1 %}
+            <span class="badge text-bg-warning">Seguimiento</span>
+        {% elif egresado.estatus == 2 %}
+            <span class="badge text-bg-danger">No titulado</span>
+        {% else %}
+            <span class="badge text-bg-success">Titulado</span>
+        {% endif %}
+    </td>
+    <td>
+        <small>Correo</small>
+        <p>{{ egresado.correo }}</p>
+        <small>Telefono</small>
+        <p>{{ egresado.telefono }}</p>
+    </td>
+</tr>

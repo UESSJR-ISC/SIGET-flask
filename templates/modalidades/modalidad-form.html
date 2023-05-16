@@ -1,0 +1,23 @@
+<form action="{{ url_for('modalidades') }}" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="nombre">Nombre de la modalidad<b class="text-danger">*</b></label>
+        <input type="text" name="nombre" id="nombre" class="form-control" maxlength="50" required>
+    </div>
+    <div class="mb-3">
+        <label for="descripcion">Descripcion<b class="text-danger">*</b></label>
+        <textarea name="descripcion" id="descripcion" rows="3" maxlength="150" class="form-control" style="resize: none;" required></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="manual">Manual (PDF)</label>
+        <input class="form-control" type="file" name="manual" id="manual">
+    </div>
+    <div class="mb-3">
+        <small><b class="text-danger">*</b>campo obligatorio.</small>
+    </div>
+    <div class="row justify-content-end">
+        <div class="col-lg-auto">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-arrow-90deg-left"></i> Cancelar</button>
+            <button type="submit" class="btn btn-primary">Registrar <i class="bi bi-arrow-right"></i></button>
+        </div>
+    </div>
+</form>

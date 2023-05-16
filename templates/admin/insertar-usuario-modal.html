@@ -1,0 +1,51 @@
+<div class="modal fade" id="registrar-usuario-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar usuario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('usuario_post') }}" method="post">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Matricula</span>
+                        <input type="text" name="matricula" class="form-control" maxlength="11" required>
+                        <span class="input-group-text">Nombre</span>
+                        <input type="text" name="nombre" class="form-control" maxlength="32" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Apellido paterno</span>
+                        <input type="text" name="apellido-paterno" class="form-control" maxlength="32" required>
+                        <span class="input-group-text">Apellido materno</span>
+                        <input type="text" name="apellido-materno" class="form-control" maxlength="32">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">UES</span>
+                        <select name="unidad-id" class="form-select">
+                            {% for unidad in unidades %}
+                                <option value="{{ unidad.id }}">{{ unidad.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                        <span class="input-group-text">Carrera</span>
+                        <select name="carrera-id" class="form-select">
+                            {% for carrera in carreras %}
+                                <option value="{{ carrera.id }}">{{ carrera.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <small><strong><i class="bi bi-info-circle"></i> Nota: </strong> al registra el usuario la contraseña es la misma que la matricula, el usuario podrá cambiarla al iniciar sesion por primera vez.</small>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row justify-content-end">
+                            <div class="col-lg-auto">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-arrow-90deg-left"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Registrar <i class="bi bi-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

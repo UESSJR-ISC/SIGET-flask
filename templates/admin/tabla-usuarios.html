@@ -1,0 +1,47 @@
+<div class="table-responsive mt-4">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Matricula</th>
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th>UES</th>
+                <th>Carrera</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+                <tr>
+                    <th scope="row">{{ usuario.matricula }}</th>
+                    <td>
+                        {% if usuario.clave == usuario.matricula %}
+                            <span class="text-danger"><i class="bi bi-exclamation-triangle"></i> Este usuario no ha cambiado su contraseña inicial, por favor contacta con el para que inicie sesion y la actualice.</span>
+                        {% else %}
+                            <span class="text-success"><i class="bi bi-check-circle"></i> La clave esta actualizada.</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ usuario.nombre }} {{ usuario.apellido_paterno }} {{ usuario.apellido_materno }}</td>
+                    <td>{{ usuario.unidad.nombre }}</td>
+                    <td>{{ usuario.carrera.nombre }}</td>
+                    <td>
+                        <div class="d-grid gap-2">
+                            <div class="d-grid gap-2" data-bs-toggle="modal" data-bs-target="#eliminar-usuario-modal-{{ usuario.id }}">
+                                <a class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Eliminar"><i class="bi bi-trash"></i></a>
+                            </div>
+                            <div class="d-grid gap-2" data-bs-toggle="modal" data-bs-target="#resetear-usuario-modal-{{ usuario.id }}">
+                                <a class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Resetear contraseña"><i class="bi bi-arrow-clockwise"></i></a>
+                            </div>
+                            <div class="d-grid gap-2" data-bs-toggle="modal" data-bs-target="#actualizar-usuario-modal-{{ usuario.id }}">
+                                <a class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Actualizar datos"><i class="bi bi-pencil"></i></a>
+                            </div>
+                        </div>
+                    </td>
+                    {% include 'admin/eliminar-usuario-modal.html' %}
+                    {% include 'admin/resetear-usuario-modal.html' %}
+                    {% include 'admin/actualizar-usuario-modal.html' %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

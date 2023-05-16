@@ -1,0 +1,59 @@
+<script>
+    const generaciones_chart_ctx = document.getElementById('generaciones-chart');
+
+    new Chart(generaciones_chart_ctx, {
+        type: 'line',
+        data: {
+            labels: [
+                {% for generacion in generaciones %} '{{ generacion.anio_inicio }} - {{ generacion.anio_final }}', {% endfor %}
+            ],
+            datasets: [{
+                label: '# de egresados',
+                data: [
+                    {% for generacion in generaciones %} parseInt('{{ egresados.filter(models.Egresados.generacion_id==generacion.id).all()|length }}'), {% endfor %}
+                ],
+                backgroundColor: 'rgba(201, 203, 207, 0.8)',
+                borderColor: 'rgba(201, 203, 207, 1.0)'
+            },
+            {
+                label: '# de titulados',
+                data: [
+                    {% for generacion in generaciones %} parseInt('{{ egresados.filter(and_(models.Egresados.generacion_id==generacion.id, models.Egresados.estatus==3)).all()|length }}'), {% endfor %}
+                ],
+                backgroundColor: 'rgba(75, 192, 192, 0.8)',
+                borderColor: 'rgba(75, 192, 192, 1.0)'
+            },
+            {
+                label: '# de pendientes',
+                data: [
+                    {% for generacion in generaciones %} parseInt('{{ egresados.filter(and_(models.Egresados.generacion_id==generacion.id, models.Egresados.estatus==0)).all()|length }}'), {% endfor %}
+                ],
+                backgroundColor: 'rgba(255, 205, 86, 0.8)',
+                borderColor: 'rgba(255, 205, 86, 1.0)'
+            },
+            {
+                label: '# de seguimiento',
+                data: [
+                    {% for generacion in generaciones %} parseInt('{{ egresados.filter(and_(models.Egresados.generacion_id==generacion.id, models.Egresados.estatus==1)).all()|length }}'), {% endfor %}
+                ],
+                backgroundColor: 'rgba(153, 102, 255, 0.8)',
+                borderColor: 'rgba(153, 102, 255, 1.0)'
+            },
+            {
+                label: '# de no titulados',
+                data: [
+                    {% for generacion in generaciones %} parseInt('{{ egresados.filter(and_(models.Egresados.generacion_id==generacion.id, models.Egresados.estatus==2)).all()|length }}'), {% endfor %}
+                ],
+                backgroundColor: 'rgba(255, 99, 132, 0.8)',
+                borderColor: 'rgba(255, 99, 132, 1.0)'
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

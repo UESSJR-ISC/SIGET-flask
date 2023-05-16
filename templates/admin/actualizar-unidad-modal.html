@@ -1,0 +1,26 @@
+<div class="modal fade" id="actualizar-unidad-modal-{{ unidad.id }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar unidad</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('admin_unidades_update', id=unidad.id) }}" method="post">
+                    <div>
+                        <label for="nombre">Nombre de la unidad</label>
+                        <input type="text" name="nombre" class="form-control" placeholder="{{ unidad.nombre }}">
+                    </div>
+                    <div class="mt-3">
+                        <div class="row justify-content-end">
+                            <div class="col-lg-auto">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-arrow-90deg-left"></i> Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Guardar <i class="bi bi-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

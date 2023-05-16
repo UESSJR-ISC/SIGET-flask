@@ -1,0 +1,31 @@
+<form action="{{ url_for('home') }}" class="row g-3 mb-3 align-items-center justify-content-end">
+    {% for arg in args.keys() %}
+        {% if not arg in ['include','sort','order'] and args[arg] != '' %}
+            <input type="hidden" name="{{ arg }}" value="{{ args[arg] }}">
+        {% endif %}
+    {% endfor %}
+    <div class="col-md-auto">
+        <label for="sort">Ordenar por</label>
+    </div>
+    <div class="col-md-auto">
+        <select name="sort" class="form-select">
+            <option value="generacion" {% if 'sort' in args.keys() and args['sort']=='generacion' %} selected {% endif %}>generacion</option>
+            <option value="nombre" {% if 'sort' in args.keys() and args['sort']=='nombre' %} selected {% endif %}>nombre</option>
+            <option value="apellidos" {% if 'sort' in args.keys() and args['sort']=='apellidos' %} selected {% endif %}>apellidos</option>
+            <option value="modalidad" {% if 'sort' in args.keys() and args['sort']=='modalidad' %} selected {% endif %}>modalidad</option>
+            <option value="estatus" {% if 'sort' in args.keys() and args['sort']=='estatus' %} selected {% endif %}>estatus</option>
+        </select>
+    </div>
+    <div class="col-md-auto">
+        <label for="order">de forma</label>
+    </div>
+    <div class="col-md-auto">
+        <select name="order" class="form-select">
+            <option value="desc" {% if 'order' in args.keys() and args['order']=='desc' %} selected {% endif %}>descendente</option>
+            <option value="asc" {% if 'order' in args.keys() and args['order']=='asc' %} selected {% endif %}>ascendente</option>
+        </select>
+    </div>
+    <div class="col-md-auto">
+        <button type="submit" class="btn btn-outline-secondary btn-sm">Aplicar <i class="bi bi-arrow-right"></i></button>
+    </div>
+</form>

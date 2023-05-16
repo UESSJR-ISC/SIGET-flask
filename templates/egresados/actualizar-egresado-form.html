@@ -1,0 +1,64 @@
+<form action="{{ url_for('egresados_update', id=egresado.id) }}" method="post" enctype="multipart/form-data">
+    <div class="input-group mb-3">
+        <span class="input-group-text">Nombre</span>
+        <input type="text" name="nombre" class="form-control" placeholder="{{ egresado.nombre }}">
+        <span class="input-group-text">Apellidos</span>
+        <input type="text" name="apellidos" class="form-control" placeholder="{{ egresado.apellidos }}">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Matricula</span>
+        <input type="text" name="matricula" class="form-control" placeholder="{{ egresado.matricula }}">
+        <span class="input-group-text">Domicilio</span>
+        <input type="text" name="domicilio" class="form-control" placeholder="{{ egresado.domicilio }}">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">CURP</span>
+        <input type="text" name="curp" class="form-control" placeholder="{{ egresado.curp }}">
+        <span class="input-group-text">Telefono</span>
+        <input type="text" name="telefono" class="form-control" placeholder="{{ egresado.telefono }}">
+        <span class="input-group-text">Correo</span>
+        <input type="text" name="correo" class="form-control" placeholder="{{ egresado.correo }}">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Sexo</span>
+        <select name="sexo" class="form-select">
+            <option value="0" {% if egresado.sexo == '0' %} selected {% endif %}>Hombre</option>
+            <option value="1" {% if egresado.sexo == '1' %} selected {% endif %}>Mujer</option>
+        </select>
+        <span class="input-group-text">Estatus</span>
+        <select name="estatus" class="form-select">
+            <option value="0" {% if egresado.estatus == 0 %} selected {% endif %}>Pendiente</option>
+            <option value="1" {% if egresado.estatus == 1 %} selected {% endif %}>Seguimiento</option>
+            <option value="2" {% if egresado.estatus == 2 %} selected {% endif %}>No titulado</option>
+            <option value="3" {% if egresado.estatus == 3 %} selected {% endif %}>Titulado</option>
+        </select>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Generacion</span>
+        <select name="generacion_id" class="form-select">
+            {% for generacion in generaciones %}
+                <option value="{{ generacion.id }}" {% if egresado.generacion.id == generacion.id %} selected {% endif %}>{{ generacion.anio_inicio }} - {{ generacion.anio_final }}</option>
+            {% endfor %}
+        </select>
+        <span class="input-group-text">Modalidad</span>
+        <select name="modalidad_id" class="form-select">
+            {% for modalidad in modalidades %}
+                <option value="{{ modalidad.id }}" {% if egresado.modalidad.id == modalidad.id %} selected {% endif %}>{{ modalidad.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="foto">Fotografia</label>
+        <input class="form-control" type="file" name="foto">
+    </div>
+    <div class="mb-3">
+        <label for="comentarios">Comentarios</label>
+        <textarea name="comentarios" rows="3" class="form-control" style="resize: none;">{{ egresado.comentarios }}</textarea>
+    </div>
+    <div class="row mt-3 justify-content-end">
+        <div class="col-md-auto">
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-egresado-{{ egresado.id }}"><i class="bi bi-arrow-90deg-left"></i> Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar <i class="bi bi-arrow-right"></i></button>
+        </div>
+    </div>
+</form>

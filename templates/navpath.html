@@ -1,0 +1,8 @@
+{% if session_type == 'user' %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">{{ session_user.unidad.nombre }}</li>
+      <li class="breadcrumb-item active">{{ session_user.carrera.nombre }}</li>
+    </ol>
+  </nav>
+{% endif %}
