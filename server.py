@@ -34,6 +34,7 @@ ADMIN_PASSW = 'toor'
 
 FOTOS_GENERACIONALES = 'static/img/generacion/'
 FOTOS_EGRESADOS = 'static/img/egresado/'
+FOTOS_BLOG = 'static/img/blog/'
 MANUALES_MODALIDADES = 'static/manual/'
 FICHEROS_ADJUNTOS = 'static/adjuntos/'
 
@@ -249,6 +250,10 @@ def home():
         egresados = egresados.filter(models.Egresados.carrera_id==carrera)
 
     generaciones = db_session.query(models.Generaciones)
+
+    if generaciones.count() == 0:
+        flash("Info: Antes de poder registrar egresados, registra las generaciones de esta carrera en esta UES.")
+        return redirect(url_for('generaciones'))
 
     if session_type == 'user':
         egresados = egresados.filter(
@@ -538,7 +543,6 @@ def egresados_update(id):
     flash(f'Info: Egresado {egresado.nombre} actualizado correctamente.')
     return redirect(url_for('home', include=egresado.id, _anchor=f'popup/modal-egresado-{egresado.id}'))
 
-
 @app.post('/generaciones/<id>/update')
 def generaciones_update(id):
     session_type = get_session_type()
@@ -585,7 +589,6 @@ def generaciones_update(id):
 
     flash('Info: Generacion actualizada correctamente.')
     return redirect(url_for('generaciones'))
-
 
 @app.get('/generaciones/<id>/delete')
 def generaciones_delete(id):
@@ -1256,6 +1259,71 @@ def info():
         total_titulados=total_titulados,
         total_egresados=total_egresados,
         total_carreras=total_carreras)
+
+@app.get('/blog')
+def blog():
+    session_type = get_session_type()    
+    session_user = get_user_from_session()
+
+    publicaciones = db_session.query(models.Publicaciones).all()
+
+    return render_template('blog.html', 
+                           session_type=session_type,
+                           session_user=session_user,
+                           publicaciones=publicaciones)
+
+@app.post('/blog_post')
+def blog_post():
+    session_type = get_session_type()
+
+    if not session_type or session_type != 'admin':
+        flash('No tienes permiso para esto')
+        return redirect(url_for('login'))
+
+    titulo = request.form['titulo']
+    descripcion = request.form['descripcion']
+    contenido = request.form['contenido']
+
+    if not 'portada' in request.files or request.files['portada'].filename == '':
+        flash('Error: Debes seleccionar una foto de portada')
+        return redirect(url_for('blog', _anchor='popup/publicar-blog-modal'))
+
+    portada_file = request.files['portada']
+
+    if not validate_file_type(portada_file.filename, ALLOWED_IMAGE_TYPES):
+        flash('Error: Tipo de archivo invalido.')
+        return redirect(url_for('blog', _anchor='popup/publicar-blog-modal'))
+    
+    portada  = guardar_foto(portada_file, FOTOS_BLOG, True)
+
+    nueva_publicacion = models.Publicaciones()
+
+    nueva_publicacion.titulo = titulo
+    nueva_publicacion.descripcion = descripcion
+    nueva_publicacion.contenido = contenido
+    nueva_publicacion.portada = portada
+    nueva_publicacion.fecha = date.today()
+
+    db_session.add(nueva_publicacion)
+    db_session.commit()
+
+    flash('Info: Se publico la entrada correctamente')
+    return redirect(url_for('blog'))
+
+@app.get('/blog/<id>')
+def blog_entry(id):
+    session_type = get_session_type()    
+    session_user = get_user_from_session()
+
+    publicacion = db_session.query(models.Publicaciones).get(id)
+
+    comments_data_href = request.base_url + f"#{publicacion.titulo.replace(' ', '-')}"
+
+    return render_template('blog/entry.html', 
+                           publicacion=publicacion,
+                           session_type=session_type,
+                           session_user=session_user,
+                           comments_data_href=comments_data_href)
 
 if __name__ == '__main__':
     app.run('0.0.0.0', 80, debug=True)

@@ -1,0 +1,52 @@
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#publicar-blog-modal">
+    <i class="bi bi-plus-circle"></i> Publicar entrada
+</button>
+<div class="modal fade" id="publicar-blog-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content text-dark">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Publicar entrada</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'alerts.html' %}
+                <form action="{{ url_for('blog_post') }}" method="post" enctype="multipart/form-data">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Titulo<b class="text-danger">*</b></span>
+                        <input type="text" name="titulo" class="form-control" required maxlength="90">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Descripcion corta<b class="text-danger">*</b></span>
+                        <input type="text" name="descripcion" class="form-control" required maxlength="120">
+                    </div>
+                    <div class="mb-3">
+                        <span>Contenido<b class="text-danger">*</b></span>
+                        <textarea id="contenido" type="text" name="contenido" class="form-control" rows="12" maxlength="4096" style="resize: none;" hidden></textarea>
+                        <textarea id="md-editor" type="text" class="form-control" rows="12" maxlength="4096" style="resize: none;"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="foto">Portada<b class="text-danger">*</b></label>
+                        <input class="form-control" type="file" name="portada" required>
+                    </div>
+                    <div class="mb-3">
+                        <small><b class="text-danger">*</b>campo obligatorio.</small>
+                    </div>
+                    <div class="row mt-3 justify-content-end">
+                        <div class="col-md-auto">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-arrow-90deg-left"></i> Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Publicar <i class="bi bi-arrow-right"></i></button>
+                        </div>
+                    </div>  
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script>
+    var simplemde = new SimpleMDE({ element: document.getElementById("md-editor") });
+    simplemde.codemirror.on("change", function(){
+	    document.getElementById("contenido").value = simplemde.value();
+    });
+</script>

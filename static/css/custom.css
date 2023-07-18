@@ -75,3 +75,7 @@ a.text-muted {
     --bs-nav-link-color: #80ba26;
     --bs-nav-link-hover-color: #80ba26;
 }
+
+.markdown-render img { 
+    width: 100%;
+} 

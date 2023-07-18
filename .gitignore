@@ -1,6 +1,8 @@
 *.db
+*.sqlite
 flask_session/*
 static/adjuntos/*
+__pycache__/*
 
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,windows,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,windows,linux

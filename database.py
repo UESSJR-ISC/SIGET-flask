@@ -5,5 +5,5 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Database = declarative_base()
 
-engine = create_engine("sqlite:///SIGET.db")
+engine = create_engine("sqlite:///SIGET.sqlite")
 db_session = scoped_session(sessionmaker(bind=engine))

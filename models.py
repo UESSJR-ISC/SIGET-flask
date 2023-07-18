@@ -104,3 +104,14 @@ class Usuarios(Database):
 
     carrera_id = Column(Integer, ForeignKey('carreras.id'))
     carrera = relationship("Carreras")
+
+
+class Publicaciones(Database):
+    __tablename__ = "publicaciones"
+
+    id = Column(Integer, primary_key=True)
+    titulo = Column(String(90))
+    descripcion = Column(String(120))
+    contenido = Column(String(4096))
+    portada = Column(String(54))
+    fecha = Column(Date)

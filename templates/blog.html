@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block headers %}
+    <title>SIGET Sistema Integral de Titulados y Egresados</title>
+    <style>
+        body {
+            background-color: #d3e4a6;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center mt-3">
+        <div class="col-lg-6">
+            <div class="mb-3">
+                {% include 'alerts.html' %}
+                <div class="row">
+                    <div class="col-lg-auto">
+                        <h4>SIGET Blog</h4>
+                    </div>
+                    <div class="col-lg-auto">
+                        {% if session_type and session_type=='admin' %}
+                            {% include 'blog/post-form.html' %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                {% for publicacion in publicaciones %}
+                    {% include 'blog/entry-preview.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
