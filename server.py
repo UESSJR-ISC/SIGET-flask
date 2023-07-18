@@ -32,12 +32,12 @@ import models
 ADMIN_ID = 'root'
 ADMIN_PASSW = 'toor'
 
+STATIC_URL_PATH = ''
+
 if not "DOCKER" in os.environ:
-    STATIC_URL_PATH = ''
     STATIC_FOLDER = 'static'
 
 else:
-    STATIC_URL_PATH = ''
     STATIC_FOLDER = '/siget-vol/static'
 
 IMG_FOLDER = STATIC_FOLDER + '/img'
@@ -65,7 +65,7 @@ SECRET_KEY = 'dmo5S4DxuD^9IWK1k33o7Xg88J&D8fq!'
 ALLOWED_IMAGE_TYPES = ['png', 'jpg', 'jpeg', 'gif']
 ALLOWED_DOC_TYPES = ['pdf', 'doc', 'docx']
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path=STATIC_URL_PATH, static_folder=STATIC_FOLDER)
 app.config.from_object(__name__)
 
 Database.metadata.create_all(engine)
