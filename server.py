@@ -1348,4 +1348,4 @@ def blog_entry(id):
                            comments_data_href=comments_data_href)
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', 80, debug=True)
+    app.run('0.0.0.0', 5000, debug=True)
