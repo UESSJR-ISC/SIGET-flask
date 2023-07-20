@@ -1,0 +1,24 @@
+<tr>
+    <td>
+        <div><b>{{ egresado.matricula }}</b></div>
+        <div>{{ egresado.nombre }} {{ egresado.apellidos }}</div>
+        <div>{{ egresado.generacion.anio_inicio }} - {{ egresado.generacion.anio_final }}</div>
+    </td>
+    <td>{{ egresado.modalidad.nombre }}</td>
+    <td>{{ egresado.comentarios }}</td>
+    {% if session_type == 'admin' or session_type == 'root' %}
+        <td>
+            <p><b>{{ egresado.unidad.nombre }}</b></p>
+            <p>{{ egresado.carrera.nombre }}</p>
+        </td>
+    {% elif session_type != 'user' %}
+        <td>
+            <p>{{ egresado.carrera.nombre }}</p>
+        </td>
+    {% endif %}
+    <td class="d-print-none">
+        <a class="btn btn-sm btn-primary" href="{{ url_for('home', include=egresado.id, _anchor='popup/modal-egresado-' + egresado.id|string) }}" target="_blank">
+            Ver <i class="bi bi-box-arrow-up-right"></i>
+        </a>
+    </td>
+</tr>

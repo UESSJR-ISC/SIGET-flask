@@ -1,0 +1,33 @@
+<div class="col-md-6">
+    <form action="{{ url_for('admin_unidades') }}" method="post">
+        <div class="input-group mb-3">
+            <input name="nombre" type="text" class="form-control" placeholder="Unidad de estudios superiores" required>
+            <button class="btn btn-outline-primary" type="submit">Registrar <i class="bi bi-arrow-right"></i></button>
+        </div>
+    </form>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Unidad de Estudios Superiores</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for unidad in unidades %}
+                    <tr>
+                        <th scope="row">{{ unidad.id }}</th>
+                        <td>{{ unidad.nombre }}</td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#actualizar-unidad-modal-{{ unidad.id }}"><i class="bi bi-pencil"></i> Actualizar</button>
+                            <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#eliminar-unidad-modal-{{ unidad.id }}"><i class="bi bi-trash"></i> Eliminar</button>
+                        </td>
+                        {% include 'siget/admin/eliminar-unidad-modal.html' %}
+                        {% include 'siget/admin/actualizar-unidad-modal.html' %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block headers %}
+    <title>Reportes | SIGET Sistema Integral de Gestión de Egresados y Titulados</title>
+{% endblock %}
+
+{% block navbar %}
+    {% include 'siget/navbar.html' %}
+{% endblock %}
+
+{% block body %}
+    <div class="row mt-3 justify-content-center">
+        <div class="col-lg-8">
+            <p class="d-print-none mt-2">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onClick="window.print()">
+                  <i class="bi bi-printer"></i>
+                  Imprimir
+                </button>
+            </p>
+        </div>
+    </div>    
+    <div class="row mt-3 justify-content-center">
+        <div class="col-lg-8">
+            <h2>Reporte de area de titulacion</h2>
+            {% include 'siget/navpath.html' %}
+            {% if session_type == 'user' %}
+                <h5>UES {{ session_user.unidad.nombre }}</h5>
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <td>{{ fecha_de_reporte }}</td>
+                        </tr>
+                        <tr>
+                            <th>Carrera</th>
+                            <td>{{ session_user.carrera.nombre }}</td>
+                        </tr>
+                        <tr>
+                            <th>Encargado del area</th>
+                            <td>{{ session_user.nombre }} {{ session_user.apellido_paterno }} {{ session_user.apellido_materno }}</td>
+                        </tr>
+                    </thead>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8">
+            <h5>Resumen de (No titulados)</h5>
+            <div class="table-responsive">
+                <table class="table table-striped-columns">
+                    <thead>
+                        <tr>
+                            <th>Matricula/Nombre/Generacion</th>
+                            <th>Modalidad</th>
+                            <th>Comentarios</th>
+                            {% if session_type == 'admin' or session_type == 'root' %}
+                                <th>UES/Carrera</th>
+                            {% elif session_type != 'user' %}
+                                <th>Carrera</th>
+                            {% endif %}
+                            <th class="d-print-none">
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for egresado in egresados.filter(models.Egresados.estatus==2).all() %}
+                            {% include 'siget/graficas/egresado-row.html' %}
+                        {% endfor  %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-lg-8">
+            <h5>Resumen de (En seguimiento)</h5>
+            <div class="table-responsive">
+                <table class="table table-striped-columns">
+                    <thead>
+                        <tr>
+                            <th>Matricula/Nombre/Generacion</th>
+                            <th>Modalidad</th>
+                            <th>Comentarios</th>
+                            {% if session_type == 'admin' or session_type == 'root' %}
+                                <th>UES/Carrera</th>
+                            {% elif session_type != 'user' %}
+                                <th>Carrera</th>
+                            {% endif %}
+                            <th class="d-print-none">
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for egresado in egresados.filter(models.Egresados.estatus==1).all() %}
+                            {% include 'siget/graficas/egresado-row.html' %}
+                        {% endfor  %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-lg-8">
+            <h5>Situacion (Pendiente)</h5>
+            <div class="table-responsive">
+                <table class="table table-striped-columns">
+                    <thead>
+                        <tr>
+                            <th>Matricula/Nombre/Generacion</th>
+                            <th>Modalidad</th>
+                            <th>Comentarios</th>
+                            {% if session_type == 'admin' or session_type == 'root' %}
+                                <th>UES/Carrera</th>
+                            {% elif session_type != 'user' %}
+                                <th>Carrera</th>
+                            {% endif %}
+                            <th class="d-print-none">
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for egresado in egresados.filter(models.Egresados.estatus==0).all() %}
+                            {% include 'siget/graficas/egresado-row.html' %}
+                        {% endfor  %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-lg-8">
+            <h5>Distribucion de estatus de egresados</h5>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <!--div class="col-lg-3">
+            <canvas id="egresados-pie"></canvas>
+        </div-->
+        <div class="col-lg-8">
+            <canvas id="egresados-barra"></canvas>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-lg-8">
+            <h5>Distribucion de estatus de egresados por generacion</h5>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-lg-8">
+            <canvas id="generaciones-chart"></canvas>
+        </div>
+    </div>
+    <div class="row mt-5 d-none d-print-block justify-content-center">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <hr>
+                        <p class="text-center">
+                            <b>Nombre y firma<br />
+                            Encargado del area de titulación.</b>
+                        </p>
+                    </td>
+                    <td>
+                        <hr>
+                            <p class="text-center">
+                            <b>Firma y sello de Control Escolar.</b>
+                            </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% include 'siget/graficas/egresados-barra.html' %}
+    {% include 'siget/graficas/egresados-pie.html' %}
+    {% include 'siget/graficas/generaciones-chart.html' %}
+{% endblock %}

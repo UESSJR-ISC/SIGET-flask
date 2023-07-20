@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block headers %}
+    <title>Admin | SIGET Sistema Integral de Gestión de Egresados y Titulados</title>
+{% endblock %}
+
+{% block navbar %}
+    {% include 'siget/navbar.html' %}
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center mt-3">
+        <div class="col-lg-6">
+            {% include 'alerts.html' %}
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-lg-6">
+            {% include 'siget/admin/navbar.html' %}
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        {% if active=='unidades' %}
+            {% include 'siget/admin/unidades-form.html' %}
+        {% elif active=='carreras' %}
+            {% include 'siget/admin/carreras-form.html' %}
+        {% elif active=='modalidades' %}
+            {% include 'siget/admin/modalidades-form.html' %}
+        {% else %}
+            {% include 'siget/admin/usuarios-form.html' %}
+        {% endif %}
+    </div>
+{% endblock %}

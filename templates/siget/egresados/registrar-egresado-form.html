@@ -1,0 +1,119 @@
+<form action="{{ url_for('home') }}" method="post" enctype="multipart/form-data">
+    <div class="input-group mb-3">
+        <span class="input-group-text">Nombre<b class="text-danger">*</b></span>
+        <input type="text" name="nombre" class="form-control" required>
+        <span class="input-group-text">Apellidos<b class="text-danger">*</b></span>
+        <input type="text" name="apellidos" class="form-control" required>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Matricula<b class="text-danger">*</b></span>
+        <input type="text" name="matricula" class="form-control" required>
+        <span class="input-group-text">Domicilio</span>
+        <input type="text" name="domicilio" class="form-control">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">CURP</span>
+        <input type="text" name="curp" class="form-control">
+        <span class="input-group-text">Telefono</span>
+        <input type="text" name="telefono" class="form-control">
+        <span class="input-group-text">Correo</span>
+        <input type="text" name="correo" class="form-control">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Sexo<b class="text-danger">*</b></span>
+        <select name="sexo" class="form-select" required>
+            <option value="0">Hombre</option>
+            <option value="1">Mujer</option>
+        </select>
+        <span class="input-group-text">Estatus<b class="text-danger">*</b></span>
+        <select name="estatus" class="form-select" required id="egresado-estatus-insertar" onchange="onEgresadoEstatusChanged('insertar')">
+            <option value="0">Pendiente</option>
+            <option value="1">Seguimiento</option>
+            <option value="2">No titulado</option>
+            <option value="3">Titulado</option>
+        </select>
+    </div>
+    <div id="titulacion-container-insertar" style="display: none;">
+        <h5>Datos de titulacion</h5>
+        <div class="input-group mt-3 mb-3">
+            <span class="input-group-text">Fecha de titulacion</span>
+            <input type="date" name="titulacion-fecha" class="form-control">
+        </div>
+        <label>Composicion del jurado</label>
+        <hr>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Presidente</span>
+            <input type="text" name="titulacion-presidente-nombre" class="form-control" placeholder="Nombre completo">
+            <input type="text" name="titulacion-presidente-cedula" class="form-control" placeholder="Cedula profesional">
+        </div>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Secretario</span>
+            <input type="text" name="titulacion-secretario-nombre" class="form-control" placeholder="Nombre completo">
+            <input type="text" name="titulacion-secretario-cedula" class="form-control" placeholder="Cedula profesional">
+        </div>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Vocal</span>
+            <input type="text" name="titulacion-vocal-nombre" class="form-control" placeholder="Nombre completo">
+            <input type="text" name="titulacion-vocal-cedula" class="form-control" placeholder="Cedula profesional">
+        </div>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Suplente</span>
+            <input type="text" name="titulacion-suplente-nombre" class="form-control" placeholder="Nombre completo">
+            <input type="text" name="titulacion-suplente-cedula" class="form-control" placeholder="Cedula profesional">
+        </div>
+        <hr>
+        <label>Composicion del comite de titulacion</label>
+        <hr>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Presidente</span>
+            <input type="text" name="comite-presidente-nombre" class="form-control" placeholder="Nombre completo">
+            <input type="text" name="comite-presidente-cedula" class="form-control" placeholder="Cedula profesional">
+        </div>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Secretario</span>
+            <input type="text" name="comite-secretario-nombre" class="form-control" placeholder="Nombre completo">
+            <input type="text" name="comite-secretario-cedula" class="form-control" placeholder="Cedula profesional">
+        </div>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Vocal</span>
+            <input type="text" name="comite-vocal-nombre" class="form-control" placeholder="Nombre completo">
+            <input type="text" name="comite-vocal-cedula" class="form-control" placeholder="Cedula profesional">
+        </div>
+        <hr>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Generacion<b class="text-danger">*</b></span>
+        <select name="generacion_id" class="form-select" required>
+            {% for generacion in generaciones %}
+                <option value="{{ generacion.id }}">{{ generacion.anio_inicio }} - {{ generacion.anio_final }}</option>
+            {% endfor %}
+        </select>
+        <span class="input-group-text">Modalidad<b class="text-danger">*</b></span>
+        <select name="modalidad_id" class="form-select" required>
+            {% for modalidad in modalidades %}
+                <option value="{{ modalidad.id }}">{{ modalidad.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3" id="proyecto-escrito-container-insertar" style="display: none;">
+        <label for="proyecto-escrito-titulo">Titulo del proyecto escrito</label>
+        <input class="form-control" type="text" name="proyecto-escrito-titulo" id="proyecto-escrito-titulo">
+    </div>
+    <div class="mb-3">
+        <label for="foto">Fotografia</label>
+        <input class="form-control" type="file" name="foto">
+    </div>
+    <div class="mb-3">
+        <label for="comentarios">Comentarios</label>
+        <textarea name="comentarios" rows="3" class="form-control" style="resize: none;"></textarea>
+    </div>
+    <div class="mb-3">
+        <small><b class="text-danger">*</b>campo obligatorio.</small>
+    </div>
+    <div class="row mt-3 justify-content-end">
+        <div class="col-md-auto">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-arrow-90deg-left"></i> Cancelar</button>
+            <button type="submit" class="btn btn-primary">Registrar <i class="bi bi-arrow-right"></i></button>
+        </div>
+    </div>  
+</form>

@@ -1,0 +1,15 @@
+<strong>Egresados</strong>
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registrar-egresado-modal"><i class="bi bi-plus-circle"></i> Registrar Egresado</button>
+<div class="modal fade" id="registrar-egresado-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content text-dark">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Registrar egresado</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% include 'siget/egresados/registrar-egresado-form.html' %}
+            </div>
+        </div>
+    </div>
+</div>

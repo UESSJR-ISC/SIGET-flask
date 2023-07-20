@@ -1,0 +1,22 @@
+{% if session_type == 'user' %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">{{ session_user.unidad.nombre }}</li>
+      <li class="breadcrumb-item active">{{ session_user.carrera.nombre }}</li>
+    </ol>
+  </nav>
+{% elif session_type == 'coordi' %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">{{ session_user.unidad.nombre }}</li>
+      <li class="breadcrumb-item active">Coordinacion</li>
+    </ol>
+  </nav>
+{% elif session_type == 'control' %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">{{ session_user.unidad.nombre }}</li>
+      <li class="breadcrumb-item active">Control Escolar</li>
+    </ol>
+  </nav>
+{% endif %}

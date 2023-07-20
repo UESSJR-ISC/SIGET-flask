@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block headers %}
+    <title>Modalidades | SIGET Sistema Integral de Gestión de Egresados y Titulados</title>
+{% endblock %}
+
+{% block navbar %}
+    {% include 'siget/navbar.html' %}
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-4">
+            <div class="card text-bg-dark mb-3" style="width: 100%;">
+                <div class="card-header">Registrar modalidades</div>
+                <div class="card-body">
+                    {% include 'siget/modalidades/modalidad-form.html' %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            {% include 'alerts.html' %}
+            {% include 'siget/modalidades/modalidades-table.html' %}
+        </div>
+    </div>
+{% endblock %}

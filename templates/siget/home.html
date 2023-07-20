@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block headers %}
+    <title>SIGET Sistema Integral de Gestión de Egresados y Titulados</title>
+{% endblock %}
+
+{% block navbar %}
+    {% include 'siget/navbar.html' %}
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center mt-3">
+        <div class="col-lg-3 mt-3">
+            <div class="card text-bg-dark" style="width: 100%;">
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        {% if session_type and session_type == 'user' %}
+                            {% include 'siget/egresados/registrar-egresado-modal.html' %}
+                        {% else %}
+                            <p>Tu cuenta no puede registrar o editar egresados.</p>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="mt-3">
+                        {% include 'siget/busqueda-form.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 mt-3">
+            {% include 'alerts.html' %}
+            <div class="row justify-content-end">
+                <div class="col-md-auto">
+                    {% include 'siget/navpath.html' %}
+                </div>
+            </div>
+            {% include 'siget/ordenar-form.html' %}
+            {% include 'siget/egresados/tabla-egresados.html' %}
+            <div class="row justify-content-center">
+                <div class="col-md-auto">
+                    {% include 'siget/paginate.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        var onEgresadoEstatusChanged = function(id) {
+            var estatus_select = document.getElementById("egresado-estatus-" + id);
+            var titulacion_container = document.getElementById("titulacion-container-" + id);
+            var proyecto_escrito_container = document.getElementById("proyecto-escrito-container-" + id);
+
+            switch (estatus_select.value) {
+                case '0':
+                    // Pendiente
+                    titulacion_container.setAttribute('style', 'display: none;');
+                    proyecto_escrito_container.setAttribute('style', 'display: none;');
+                    break;
+                
+                case '1':
+                    // Seguimiento
+                    titulacion_container.setAttribute('style', 'display: none;');
+                    proyecto_escrito_container.setAttribute('style', 'display: block;');
+                    break;
+
+                case '2':
+                    // No titulado
+                    titulacion_container.setAttribute('style', 'display: none;');
+                    proyecto_escrito_container.setAttribute('style', 'display: none;');
+                    break;
+
+                case '3':
+                    // Titulado
+                    titulacion_container.setAttribute('style', 'display: block;');
+                    proyecto_escrito_container.setAttribute('style', 'display: block;');
+                    break;
+            }
+        };
+    </script>
+{% endblock %}

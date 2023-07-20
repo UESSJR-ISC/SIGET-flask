@@ -1,0 +1,66 @@
+<form action="{{ url_for('home') }}" method="GET">
+    {% for arg in args.keys() %}
+        {% if not arg in ['page', 'include', 'buscar', 'generacion', 'modalidad', 'estatus', 'unidad', 'carrera'] and args[arg] != '' %}
+            <input type="hidden" name="{{ arg }}" value="{{ args[arg] }}">
+        {% endif %}
+    {% endfor %}
+    <strong><i class="bi bi-filter"></i> Busqueda y filtrado</strong>
+    <div class="mt-3">
+        <button type="button" id="reset-buscar" class="btn-close {% if not 'buscar' in args.keys() or args['buscar']=='' %} hidden {% endif %}" style="position: absolute; right: 25px; margin-top: 31px;" onclick="document.getElementById('buscar').value='';document.getElementById('reset-buscar').setAttribute('class', 'btn-close hidden');"></button>
+        <label for="buscar"><small>Buscar</small></label>
+        <input type="text" name="buscar" id="buscar" class="form-control" placeholder="Nombre, apellidos, correo..." {% if 'buscar' in args.keys() and args['buscar']!='' %} value="{{ args['buscar'] }}" {% endif %} onkeyup="if(document.getElementById('buscar').value!=''){document.getElementById('reset-buscar').setAttribute('class', 'btn-close');}">
+    </div>
+    <div class="mt-1">
+        <label for="generacion"><small>Generacion</small></label>
+        <select name="generacion" class="form-select">
+            <option value="all" {% if 'generacion' in args.keys() and args['generacion']=='all' %} selected {% endif %}>Todas</option>
+            {% for generacion in generaciones %}
+                <option value="{{ generacion.id }}" {% if 'generacion' in args.keys() and args['generacion']==generacion.id|string %} selected {% endif %}>{{ generacion.anio_inicio }} - {{ generacion.anio_final }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mt-1">
+        <label for="modalidad"><small>Modalidad</small></label>
+        <select name="modalidad" class="form-select">
+            <option value="all" {% if 'modalidad' in args.keys() and args['modalidad']=='all' %} selected {% endif %}>Todas</option>
+            {% for modalidad in modalidades %}
+                <option value="{{ modalidad.id }}" {% if 'modalidad' in args.keys() and args['modalidad']==modalidad.id|string %} selected {% endif %}>{{ modalidad.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mt-1">
+        <label for="estatus"><small>Estatus</small></label>
+        <select name="estatus" class="form-select">
+            <option value="all" {% if 'estatus' in args.keys() and args['estatus']=='all' %} selected {% endif %}>Todos</option>
+            <option value="0" {% if 'estatus' in args.keys() and args['estatus']=='0' %} selected {% endif %}>Pendiente</option>
+            <option value="1" {% if 'estatus' in args.keys() and args['estatus']=='1' %} selected {% endif %}>Seguimiento</option>
+            <option value="2" {% if 'estatus' in args.keys() and args['estatus']=='2' %} selected {% endif %}>No titulado</option>
+            <option value="3" {% if 'estatus' in args.keys() and args['estatus']=='3' %} selected {% endif %}>Titulado</option>
+        </select>
+    </div>
+    {% if session_type == 'admin' %}
+        <div class="mt-1">
+            <label for="unidad"><small>UES</small></label>
+            <select name="unidad" class="form-select">
+                <option value="all" {% if 'unidad' in args.keys() and args['unidad']=='all' %} selected {% endif %}>Todas</option>
+                {% for unidad in unidades %}
+                    <option value="{{ unidad.id }}" {% if 'unidad' in args.keys() and args['unidad']==unidad.id|string %} selected {% endif %}>{{ unidad.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endif %}
+    {% if session_type != 'user' %}
+        <div class="mt-1">
+            <label for="carrera"><small>Carrera</small></label>
+            <select name="carrera" class="form-select">
+                <option value="all" {% if 'carrera' in args.keys() and args['carrera']=='all' %} selected {% endif %}>Todas</option>
+                {% for carrera in carreras %}
+                    <option value="{{ carrera.id }}" {% if 'carrera' in args.keys() and args['carrera']==carrera.id|string %} selected {% endif %}>{{ carrera.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endif %}
+    <div class="d-grid gap-2 mt-3">
+        <button type="submit" class="btn btn-secondary btn-sm">Aplicar <i class="bi bi-arrow-right"></i></button>
+    </div>
+</form>

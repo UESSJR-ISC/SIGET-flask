@@ -17,9 +17,7 @@ const hash_arg = hash[1];
 switch (hash_route) {
     case "#popup":
         const modal = new bootstrap.Modal('#' + hash_arg);
-        setTimeout(function() {
-            modal.show();
-        }, 1000);
+        modal.show();
     break;
 
     default:

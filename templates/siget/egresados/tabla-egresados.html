@@ -1,0 +1,73 @@
+<div class="table-responsive">
+    <table class="table table-striped-columns table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nombre</th>
+                <th>Generacion</th>
+                <th>Modalidad</th>
+                <th>Estatus</th>
+                <th>
+                    {% if session_type == 'user' %}
+                        Acciones 
+                    {% elif session_type == 'admin' or session_type == 'root' %}
+                        UES/Carrera 
+                    {% else %}
+                        Carrera
+                    {% endif %}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for egresado in egresados %}
+                <tr>
+                    <td>
+                        {% if egresado.foto != 'default.png' %}
+                            <img class="foto-perfil mx-auto d-block" src="{{ url_for('static', filename='img/egresado/'+egresado.foto) }}" alt="Fotografia">
+                        {% else %}
+                            {% if egresado.sexo == '0' %}
+                                <img class="foto-perfil mx-auto d-block" src="{{ url_for('static', filename='img/egresado/default-m.jpg') }}" alt="Fotografia">
+                            {% else %}
+                                <img class="foto-perfil mx-auto d-block" src="{{ url_for('static', filename='img/egresado/default-w.jpg') }}" alt="Fotografia">
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td><b>{{ egresado.nombre }}</b> {{ egresado.apellidos }}</td>
+                    <td>{{ egresado.generacion.anio_inicio }} - {{ egresado.generacion.anio_final }}</td>
+                    <td>
+                        {% if egresado.modalidad.manual != 'default.pdf' %}
+                            <a href="{{ url_for('static', filename='manual/'+egresado.modalidad.manual) }}" target="_blank" style="text-decoration: none;">
+                                {{ egresado.modalidad.nombre }} <i class="bi bi-box-arrow-up-right"></i>
+                            </a>
+                        {% else %}
+                            {{ egresado.modalidad.nombre }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if egresado.estatus == 0 %}
+                            <span class="badge text-bg-secondary">Pendiente</span>
+                        {% elif egresado.estatus == 1 %}
+                            <span class="badge text-bg-warning">Seguimiento</span>
+                        {% elif egresado.estatus == 2 %}
+                            <span class="badge text-bg-danger">No titulado</span>
+                        {% else %}
+                            <span class="badge text-bg-success">Titulado</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if session_type == 'admin' or session_type == 'root' %}
+                            <b>{{ egresado.unidad.nombre }}</b> <br>
+                            {{ egresado.carrera.nombre }}
+                        {% elif session_type == 'coordi' or session_type == 'control' %}
+                            {{ egresado.carrera.nombre }}
+                        {% endif %}
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-egresado-{{ egresado.id }}"><i class="bi bi-search"></i> Detalles</button>
+                        </div>
+                        {% include 'siget/egresados/modal-egresado.html' %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

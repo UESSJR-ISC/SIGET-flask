@@ -1,0 +1,81 @@
+<div class="table-responsive mt-4">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Matricula</th>
+                <th>Rol</th>
+                <th>Nombre</th>
+                <th>UES</th>
+                <th>Carrera</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+                <tr>
+                    <th scope="row">{{ usuario.matricula }}</th>
+                    <td>
+                        {% if usuario.rol == 0 %}
+                            <span class="badge text-bg-danger">Admin</span>
+                        {% elif usuario.rol == 1 %}
+                            <span class="badge text-bg-success">Coordinador</span>
+                        {% elif usuario.rol == 2 %}
+                            <span class="badge text-bg-secondary">Control E.</span>
+                        {% elif usuario.rol == 3 %}
+                            <span class="badge text-bg-primary">Docente</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ usuario.nombre }} {{ usuario.apellido_paterno }} {{ usuario.apellido_materno }}</td>
+                    <td>
+                        {% if usuario.rol != 0 %}
+                            {{ usuario.unidad.nombre }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if usuario.rol == 3 %}
+                            {{ usuario.carrera.nombre }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="d-grid gap-2">
+                            <div class="d-grid gap-2" data-bs-toggle="modal" data-bs-target="#eliminar-usuario-modal-{{ usuario.id }}">
+                                <a class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Eliminar"><i class="bi bi-trash"></i></a>
+                            </div>
+                            <div class="d-grid gap-2" data-bs-toggle="modal" data-bs-target="#resetear-usuario-modal-{{ usuario.id }}">
+                                <a class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Resetear contraseña"><i class="bi bi-arrow-clockwise"></i></a>
+                            </div>
+                            <div class="d-grid gap-2" data-bs-toggle="modal" data-bs-target="#actualizar-usuario-modal-{{ usuario.id }}">
+                                <a class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Actualizar datos"><i class="bi bi-pencil"></i></a>
+                            </div>
+                        </div>
+                    </td>
+                    {% include 'siget/admin/eliminar-usuario-modal.html' %}
+                    {% include 'siget/admin/resetear-usuario-modal.html' %}
+                    {% include 'siget/admin/actualizar-usuario-modal.html' %}
+                </tr>
+            {% endfor %}
+            <script>
+                var onUpdateRolChanged = function(id) {
+                    var rol = document.getElementById("user-update-rol-select-" + id);
+                    var carrera_container = document.getElementById("user-update-carrera-select-" + id);
+                    var unidad_container  = document.getElementById("user-update-unidad-select-" + id);
+
+                    if (rol.value == '0') {
+                        carrera_container.setAttribute("style", "display: none;");
+                        unidad_container.setAttribute("style", "display: none;");
+                    } else if (rol.value == '1' || rol.value == '2') {
+                        carrera_container.setAttribute("style", "display: none;");
+                        unidad_container.setAttribute("style", "display: block;");
+                    } else {
+                        carrera_container.setAttribute("style", "display: block;");
+                        unidad_container.setAttribute("style", "display: block;");
+                    };
+                };
+            </script>
+        </tbody>
+    </table>
+</div>
