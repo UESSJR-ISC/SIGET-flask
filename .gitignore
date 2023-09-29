@@ -4,6 +4,9 @@ flask_session/*
 static/adjuntos/*
 __pycache__/*
 
+*.pdf
+upload-*.png
+
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,windows,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,windows,linux
 

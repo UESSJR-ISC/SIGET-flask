@@ -26,12 +26,60 @@
             <option value="1" {% if egresado.sexo == '1' %} selected {% endif %}>Mujer</option>
         </select>
         <span class="input-group-text">Estatus</span>
-        <select name="estatus" class="form-select">
+        <select name="estatus" class="form-select" id="egresado-estatus-update-{{ egresado.id }}" onchange="onEgresadoEstatusChanged('update-{{ egresado.id }}')">
             <option value="0" {% if egresado.estatus == 0 %} selected {% endif %}>Pendiente</option>
             <option value="1" {% if egresado.estatus == 1 %} selected {% endif %}>Seguimiento</option>
             <option value="2" {% if egresado.estatus == 2 %} selected {% endif %}>No titulado</option>
             <option value="3" {% if egresado.estatus == 3 %} selected {% endif %}>Titulado</option>
         </select>
+    </div>
+    <div id="titulacion-container-update-{{ egresado.id }}" {% if egresado.estatus == 0 or egresado.estatus == 2 %} style="display: none;" {% endif %}>
+        <h5>Datos de titulacion</h5>
+        <div class="input-group mt-3 mb-3">
+            <span class="input-group-text">Fecha de titulacion</span>
+            <input type="date" name="titulacion-fecha" class="form-control" value="{{ egresado.titulacion_fecha }}">
+        </div>
+        <label>Composicion del jurado</label>
+        <hr>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Presidente</span>
+            <input type="text" name="titulacion-presidente-nombre" class="form-control" placeholder="{{ egresado.titulacion_presidente_nombre }}">
+            <input type="text" name="titulacion-presidente-cedula" class="form-control" placeholder="{{ egresado.titulacion_presidente_cedula }}">
+        </div>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Secretario</span>
+            <input type="text" name="titulacion-secretario-nombre" class="form-control" placeholder="{{ egresado.titulacion_secretario_nombre }}">
+            <input type="text" name="titulacion-secretario-cedula" class="form-control" placeholder="{{ egresado.titulacion_secretario_cedula }}">
+        </div>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Vocal</span>
+            <input type="text" name="titulacion-vocal-nombre" class="form-control" placeholder="{{ egresado.titulacion_vocal_nombre }}">
+            <input type="text" name="titulacion-vocal-cedula" class="form-control" placeholder="{{ egresado.titulacion_vocal_cedula }}">
+        </div>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Suplente</span>
+            <input type="text" name="titulacion-suplente-nombre" class="form-control" placeholder="{{ egresado.titulacion_suplente_nombre }}">
+            <input type="text" name="titulacion-suplente-cedula" class="form-control" placeholder="{{ egresado.titulacion_suplente_cedula }}">
+        </div>
+        <hr>
+        <label>Composicion del comite de titulacion</label>
+        <hr>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Presidente</span>
+            <input type="text" name="comite-presidente-nombre" class="form-control" placeholder="{{ egresado.comite_presidente_nombre }}">
+            <input type="text" name="comite-presidente-cedula" class="form-control" placeholder="{{ egresado.comite_presidente_cedula }}">
+        </div>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Secretario</span>
+            <input type="text" name="comite-secretario-nombre" class="form-control" placeholder="{{ egresado.comite_secretario_nombre }}">
+            <input type="text" name="comite-secretario-cedula" class="form-control" placeholder="{{ egresado.comite_secretario_cedula }}">
+        </div>
+        <div class="input-group mb-4">
+            <span class="input-group-text w-25">Vocal</span>
+            <input type="text" name="comite-vocal-nombre" class="form-control" placeholder="{{ egresado.comite_vocal_nombre }}">
+            <input type="text" name="comite-vocal-cedula" class="form-control" placeholder="{{ egresado.comite_vocal_cedula }}">
+        </div>
+        <hr>
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text">Generacion</span>
@@ -46,6 +94,10 @@
                 <option value="{{ modalidad.id }}" {% if egresado.modalidad.id == modalidad.id %} selected {% endif %}>{{ modalidad.nombre }}</option>
             {% endfor %}
         </select>
+    </div>
+    <div class="mb-3" id="proyecto-escrito-container-update-{{ egresado.id }}" {% if egresado.estatus == 0 or egresado.estatus == 2 %} style="display: none;" {% endif %}>
+        <label for="proyecto-escrito-titulo">Titulo del proyecto escrito</label>
+        <input class="form-control" type="text" name="proyecto-escrito-titulo" id="proyecto-escrito-titulo" placeholder="{{ egresado.proyecto_escrito_titulo }}">
     </div>
     <div class="mb-3">
         <label for="foto">Fotografia</label>

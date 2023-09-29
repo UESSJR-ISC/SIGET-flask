@@ -63,6 +63,30 @@ class Egresados(Database):
 
     ficheros = relationship("Ficheros", back_populates='egresado')
 
+    titulacion_fecha = Column(String(10))
+    proyecto_escrito_titulo = Column(String(250))
+
+    titulacion_presidente_nombre = Column(String(200))
+    titulacion_presidente_cedula = Column(String(10))
+
+    titulacion_secretario_nombre = Column(String(200))
+    titulacion_secretario_cedula = Column(String(10))
+
+    titulacion_vocal_nombre = Column(String(200))
+    titulacion_vocal_cedula = Column(String(10))
+
+    titulacion_suplente_nombre = Column(String(200))
+    titulacion_suplente_cedula = Column(String(10))
+
+    comite_presidente_nombre = Column(String(200))
+    comite_presidente_cedula = Column(String(10))
+
+    comite_secretario_nombre = Column(String(200))
+    comite_secretario_cedula = Column(String(10))
+
+    comite_vocal_nombre = Column(String(200))
+    comite_vocal_cedula = Column(String(10))
+
 
 class Ficheros(Database):
     __tablename__ = "siget_ficheros"

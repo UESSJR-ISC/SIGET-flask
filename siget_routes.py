@@ -35,6 +35,12 @@ def get_user_from_session():
     
     return None
 
+def allow_empty_field(value):
+    if not value:
+        return ''
+    
+    return value
+
 
 @app.route('/siget', methods=['GET', 'POST'])
 def home():
@@ -57,8 +63,25 @@ def home():
         estatus = request.form['estatus']
         modalidad_id = request.form['modalidad_id']
         generacion_id = request.form['generacion_id']
-        comentarios = request.form['comentarios']
+        comentarios = allow_empty_field(request.form['comentarios'])
         foto = 'default.png'
+
+        titulacion_fecha = allow_empty_field(request.form['titulacion-fecha'])
+        proyecto_escrito_titulo = allow_empty_field(request.form['proyecto-escrito-titulo'])
+        titulacion_presidente_nombre = allow_empty_field(request.form['titulacion-presidente-nombre'])
+        titulacion_presidente_cedula = allow_empty_field(request.form['titulacion-presidente-cedula'])
+        titulacion_secretario_nombre = allow_empty_field(request.form['titulacion-secretario-nombre'])
+        titulacion_secretario_cedula = allow_empty_field(request.form['titulacion-secretario-cedula'])
+        titulacion_vocal_nombre = allow_empty_field(request.form['titulacion-vocal-nombre'])
+        titulacion_vocal_cedula = allow_empty_field(request.form['titulacion-vocal-cedula'])
+        titulacion_suplente_nombre = allow_empty_field(request.form['titulacion-suplente-nombre'])
+        titulacion_suplente_cedula = allow_empty_field(request.form['titulacion-suplente-cedula'])
+        comite_presidente_nombre = allow_empty_field(request.form['comite-presidente-nombre'])
+        comite_presidente_cedula = allow_empty_field(request.form['comite-presidente-cedula'])
+        comite_secretario_nombre = allow_empty_field(request.form['comite-secretario-nombre'])
+        comite_secretario_cedula = allow_empty_field(request.form['comite-secretario-cedula'])
+        comite_vocal_nombre = allow_empty_field(request.form['comite-vocal-nombre'])
+        comite_vocal_cedula = allow_empty_field(request.form['comite-vocal-cedula'])
 
         if not matricula or matricula == '':
             flash('Error: Se debe registrar una matricula.')
@@ -107,9 +130,6 @@ def home():
         if not generacion_id or generacion_id == '':
             flash('Error: Se debe registrar una generacion.')
             return redirect(url_for('home'))
-        
-        if not comentarios:
-            comentarios = ''
 
         if 'foto' in request.files and request.files['foto'].filename != '':
             foto_file = request.files['foto']
@@ -137,6 +157,22 @@ def home():
         nuevo_egresado.foto = foto
         nuevo_egresado.unidad_id = session_user.unidad_id
         nuevo_egresado.carrera_id = session_user.carrera_id
+        nuevo_egresado.titulacion_fecha = titulacion_fecha
+        nuevo_egresado.proyecto_escrito_titulo = proyecto_escrito_titulo
+        nuevo_egresado.titulacion_presidente_nombre = titulacion_presidente_nombre
+        nuevo_egresado.titulacion_presidente_cedula = titulacion_presidente_cedula
+        nuevo_egresado.titulacion_secretario_nombre = titulacion_secretario_nombre
+        nuevo_egresado.titulacion_secretario_cedula = titulacion_secretario_cedula
+        nuevo_egresado.titulacion_vocal_nombre = titulacion_vocal_nombre
+        nuevo_egresado.titulacion_vocal_cedula = titulacion_vocal_cedula
+        nuevo_egresado.titulacion_suplente_nombre = titulacion_suplente_nombre
+        nuevo_egresado.titulacion_suplente_cedula = titulacion_suplente_cedula
+        nuevo_egresado.comite_presidente_nombre = comite_presidente_nombre
+        nuevo_egresado.comite_presidente_cedula = comite_presidente_cedula
+        nuevo_egresado.comite_secretario_nombre = comite_secretario_nombre
+        nuevo_egresado.comite_secretario_cedula = comite_secretario_cedula
+        nuevo_egresado.comite_vocal_nombre = comite_vocal_nombre
+        nuevo_egresado.comite_vocal_cedula = comite_vocal_cedula
 
         db_session.add(nuevo_egresado)
         db_session.commit()
@@ -426,6 +462,26 @@ def egresados_update(id):
     generacion_id = request.form['generacion_id']
     comentarios = request.form['comentarios']
 
+    titulacion_fecha = request.form['titulacion-fecha']
+
+    titulacion_presidente_nombre = request.form['titulacion-presidente-nombre']
+    titulacion_presidente_cedula = request.form['titulacion-presidente-cedula']
+    titulacion_secretario_nombre = request.form['titulacion-secretario-nombre']
+    titulacion_secretario_cedula = request.form['titulacion-secretario-cedula']
+    titulacion_vocal_nombre = request.form['titulacion-vocal-nombre']
+    titulacion_vocal_cedula = request.form['titulacion-vocal-cedula']
+    titulacion_suplente_nombre = request.form['titulacion-suplente-nombre']
+    titulacion_suplente_cedula = request.form['titulacion-suplente-cedula']
+
+    comite_presidente_nombre = request.form['comite-presidente-nombre']
+    comite_presidente_cedula = request.form['comite-presidente-cedula']
+    comite_secretario_nombre = request.form['comite-secretario-nombre']
+    comite_secretario_cedula = request.form['comite-secretario-cedula']
+    comite_vocal_nombre = request.form['comite-vocal-nombre']
+    comite_vocal_cedula = request.form['comite-vocal-cedula']
+
+    proyecto_escrito_titulo = request.form['proyecto-escrito-titulo']
+
     if matricula and matricula != '':
         egresado_check = db_session.query(siget_models.Egresados)\
             .filter(siget_models.Egresados.matricula==matricula)\
@@ -437,6 +493,54 @@ def egresados_update(id):
 
         egresado.matricula = matricula
     
+    if titulacion_fecha and titulacion_fecha != '':
+        egresado.titulacion_fecha = titulacion_fecha
+    
+    if titulacion_presidente_nombre and titulacion_presidente_nombre != '':
+        egresado.titulacion_presidente_nombre = titulacion_presidente_nombre
+    
+    if titulacion_presidente_cedula and titulacion_presidente_cedula != '':
+        egresado.titulacion_presidente_cedula = titulacion_presidente_cedula
+    
+    if titulacion_secretario_nombre and titulacion_secretario_nombre != '':
+        egresado.titulacion_secretario_nombre = titulacion_secretario_nombre
+        
+    if titulacion_secretario_cedula and titulacion_secretario_cedula != '':
+        egresado.titulacion_secretario_cedula = titulacion_secretario_cedula
+    
+    if titulacion_vocal_nombre and titulacion_vocal_nombre != '':
+        egresado.titulacion_vocal_nombre = titulacion_vocal_nombre
+    
+    if titulacion_vocal_cedula and titulacion_vocal_cedula != '':
+        egresado.titulacion_vocal_cedula = titulacion_vocal_cedula
+    
+    if titulacion_suplente_nombre and titulacion_suplente_nombre != '':
+        egresado.titulacion_suplente_nombre = titulacion_suplente_nombre
+    
+    if titulacion_suplente_cedula and titulacion_suplente_cedula != '':
+        egresado.titulacion_suplente_cedula = titulacion_suplente_cedula
+    
+    if comite_presidente_nombre and comite_presidente_nombre != '':
+        egresado.comite_presidente_nombre = comite_presidente_nombre
+    
+    if comite_presidente_cedula and comite_presidente_cedula != '':
+        egresado.comite_presidente_cedula = comite_presidente_cedula
+    
+    if comite_secretario_nombre and comite_secretario_nombre != '':
+        egresado.comite_secretario_nombre = comite_secretario_nombre
+    
+    if comite_secretario_cedula and comite_secretario_cedula != '':
+        egresado.comite_secretario_cedula = comite_secretario_cedula
+    
+    if comite_vocal_nombre and comite_vocal_nombre != '':
+        egresado.comite_vocal_nombre = comite_vocal_nombre
+    
+    if comite_vocal_cedula and comite_vocal_cedula != '':
+        egresado.comite_vocal_cedula = comite_vocal_cedula
+    
+    if proyecto_escrito_titulo and proyecto_escrito_titulo != '':
+        egresado.proyecto_escrito_titulo = proyecto_escrito_titulo
+
     if nombre and nombre != '':
         egresado.nombre = nombre
     

@@ -23,7 +23,7 @@ def save_picture(file, path, crop=False):
         image = image.crop(crop_area)
         image = image.resize((480, 480), Image.ANTIALIAS)
 
-    file_name = "%s.png" % str(uuid.uuid4())
+    file_name = "upload-%s.png" % str(uuid.uuid4())
     file_path = path + file_name
 
     image.save(file_path, format="png")

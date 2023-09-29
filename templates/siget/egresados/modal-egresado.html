@@ -122,6 +122,68 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="container-fluid g-0 mb-3" {% if egresado.estatus == 0 or egresado.estatus == 2 %} style="display: none;" {% endif %}>
+                                <small>DATOS DE LA TITULACION</small>
+                                <p><i class="bi bi-calendar-date"></i> Fecha de titulacion: <b>{{ egresado.titulacion_fecha }}</b></p>
+                                <small>SINODO</small>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        Presidente: <b>{{ egresado.titulacion_presidente_nombre }}</b>
+                                    </div>
+                                    <div class="col-md-5">
+                                        ced.prof: <b>{{ egresado.titulacion_presidente_cedula }}</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        Secretario: <b>{{ egresado.titulacion_secretario_nombre }}</b>
+                                    </div>
+                                    <div class="col-md-5">
+                                        ced.prof: <b>{{ egresado.titulacion_secretario_cedula }}</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        Vocal: <b>{{ egresado.titulacion_vocal_nombre }}</b>
+                                    </div>
+                                    <div class="col-md-5">
+                                        ced.prof: <b>{{ egresado.titulacion_vocal_cedula }}</b>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-7">
+                                        Suplente: <b>{{ egresado.titulacion_suplente_nombre }}</b>
+                                    </div>
+                                    <div class="col-md-5">
+                                        ced.prof: <b>{{ egresado.titulacion_suplente_cedula }}</b>
+                                    </div>
+                                </div>
+                                <small>COMITE</small>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        Presidente: <b>{{ egresado.comite_presidente_nombre }}</b>
+                                    </div>
+                                    <div class="col-md-5">
+                                        ced.prof: <b>{{ egresado.comite_presidente_cedula }}</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        Secretario: <b>{{ egresado.comite_secretario_nombre }}</b>
+                                    </div>
+                                    <div class="col-md-5">
+                                        ced.prof: <b>{{ egresado.comite_secretario_cedula }}</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        Vocal: <b>{{ egresado.comite_vocal_nombre }}</b>
+                                    </div>
+                                    <div class="col-md-5">
+                                        ced.prof: <b>{{ egresado.comite_vocal_cedula }}</b>
+                                    </div>
+                                </div>
+                            </div>
                             <small><i class="bi bi-sticky"></i> Comentarios</small>
                             {% if egresado.comentarios == '' %}
                                 <p class="text-secondary">Sin comentarios</p>
