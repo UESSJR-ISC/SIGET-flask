@@ -123,66 +123,44 @@
                                 </div>
                             </div>
                             <div class="container-fluid g-0 mb-3" {% if egresado.estatus == 0 or egresado.estatus == 2 %} style="display: none;" {% endif %}>
+                                <hr>
                                 <small>DATOS DE LA TITULACION</small>
                                 <p><i class="bi bi-calendar-date"></i> Fecha de titulacion: <b>{{ egresado.titulacion_fecha }}</b></p>
-                                <small>SINODO</small>
+                                <small>TITULO DEL PROYECTO ESCRITO</small>
+                                <p><b>{{ egresado.proyecto_escrito_titulo }}</b></p>
                                 <div class="row">
-                                    <div class="col-md-7">
-                                        Presidente: <b>{{ egresado.titulacion_presidente_nombre }}</b>
+                                    <div class="col-md-6">
+                                        <small>SINODO</small><br>
+                                        <span class="text-primary">{{ egresado.titulacion_presidente_nombre }}</span>
+                                        <span class="badge text-bg-primary">Ced. {{ egresado.titulacion_presidente_cedula }}</span><br>
+                                        <span class="text-success">{{ egresado.titulacion_secretario_nombre }}</span>
+                                        <span class="badge text-bg-success">Ced. {{ egresado.titulacion_secretario_cedula }}</span><br>
+                                        <span class="text-secondary">{{ egresado.titulacion_vocal_nombre }}</span>
+                                        <span class="badge text-bg-secondary">Ced. {{ egresado.titulacion_vocal_cedula }}</span><br>
+                                        <span class="text-danger">{{ egresado.titulacion_suplente_nombre }}</span>
+                                        <span class="badge text-bg-danger">Ced. {{ egresado.titulacion_suplente_cedula }}</span>
                                     </div>
-                                    <div class="col-md-5">
-                                        ced.prof: <b>{{ egresado.titulacion_presidente_cedula }}</b>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        Secretario: <b>{{ egresado.titulacion_secretario_nombre }}</b>
-                                    </div>
-                                    <div class="col-md-5">
-                                        ced.prof: <b>{{ egresado.titulacion_secretario_cedula }}</b>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        Vocal: <b>{{ egresado.titulacion_vocal_nombre }}</b>
-                                    </div>
-                                    <div class="col-md-5">
-                                        ced.prof: <b>{{ egresado.titulacion_vocal_cedula }}</b>
+                                    <div class="col-md-6">
+                                        <small>COMITE</small><br>
+                                        <span class="text-primary">{{ egresado.comite_presidente_nombre }}</span>
+                                        <span class="badge text-bg-primary">Ced. {{ egresado.comite_presidente_cedula }}</span><br>
+                                        <span class="text-success">{{ egresado.comite_secretario_nombre }}</span>
+                                        <span class="badge text-bg-success">Ced. {{ egresado.comite_secretario_cedula }}</span><br>
+                                        <span class="text-secondary">{{ egresado.comite_vocal_nombre }}</span>
+                                        <span class="badge text-bg-secondary">Ced. {{ egresado.comite_vocal_cedula }}</span>
                                     </div>
                                 </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-7">
-                                        Suplente: <b>{{ egresado.titulacion_suplente_nombre }}</b>
-                                    </div>
-                                    <div class="col-md-5">
-                                        ced.prof: <b>{{ egresado.titulacion_suplente_cedula }}</b>
-                                    </div>
-                                </div>
-                                <small>COMITE</small>
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        Presidente: <b>{{ egresado.comite_presidente_nombre }}</b>
-                                    </div>
-                                    <div class="col-md-5">
-                                        ced.prof: <b>{{ egresado.comite_presidente_cedula }}</b>
+                                <div class="row mt-3">
+                                    <div class="col-md-auto">
+                                        <small>
+                                            <span class="text-primary">*presidente</span>
+                                            <span class="text-success">*secretario</span>
+                                            <span class="text-secondary">*vocal</span>
+                                            <span class="text-danger">*suplente</span>
+                                        </small>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        Secretario: <b>{{ egresado.comite_secretario_nombre }}</b>
-                                    </div>
-                                    <div class="col-md-5">
-                                        ced.prof: <b>{{ egresado.comite_secretario_cedula }}</b>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        Vocal: <b>{{ egresado.comite_vocal_nombre }}</b>
-                                    </div>
-                                    <div class="col-md-5">
-                                        ced.prof: <b>{{ egresado.comite_vocal_cedula }}</b>
-                                    </div>
-                                </div>
+                                <hr>
                             </div>
                             <small><i class="bi bi-sticky"></i> Comentarios</small>
                             {% if egresado.comentarios == '' %}

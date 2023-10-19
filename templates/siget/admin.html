@@ -26,8 +26,10 @@
             {% include 'siget/admin/carreras-form.html' %}
         {% elif active=='modalidades' %}
             {% include 'siget/admin/modalidades-form.html' %}
-        {% else %}
+        {% elif active=='usuarios' %}
             {% include 'siget/admin/usuarios-form.html' %}
+        {% elif active=='database' %}
+            {% include 'siget/admin/database-form.html' %}
         {% endif %}
     </div>
 {% endblock %}

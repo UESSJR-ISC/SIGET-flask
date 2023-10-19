@@ -14,6 +14,7 @@ from flask import flash
 from sqlalchemy import or_
 from sqlalchemy import and_
 
+from database import DB_PATH
 from database import db_session
 
 import siget_models
@@ -40,6 +41,11 @@ def allow_empty_field(value):
         return ''
     
     return value
+
+
+@app.route('/')
+def root():
+    return redirect(url_for('home'))
 
 
 @app.route('/siget', methods=['GET', 'POST'])
@@ -773,6 +779,36 @@ def reportes():
         session_type=session_type,
         session_user=session_user,
         fecha_de_reporte=date.today())
+
+
+@app.route('/siget/admin/database', methods=['GET', 'POST'])
+def admin_database():
+    session_type = get_session_type()
+
+    if not session_type or (session_type != 'admin' and session_type != 'root'):
+        return redirect(url_for('login'))
+    
+    session_user = get_user_from_session()
+
+    if request.method == 'POST':
+        return
+
+    db_file = {
+        'name': DB_PATH
+    }
+    
+    if os.path.exists(DB_PATH):
+        db_download = True
+    else:
+        db_download = False
+    
+    return render_template('siget/admin.html',
+        active='database',
+        db_download=db_download,
+        db_file=db_file,
+        session_type=session_type,
+        session_user=session_user)
+
 
 @app.route('/siget/admin/unidades', methods=['GET', 'POST'])
 def admin_unidades():
